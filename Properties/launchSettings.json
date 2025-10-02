@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "OddsValidator": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

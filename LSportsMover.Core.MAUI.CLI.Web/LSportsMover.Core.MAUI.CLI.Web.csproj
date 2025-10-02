@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\LSportsMover.Core.Lib\LSportsMover.Core.Lib.csproj" />
+    <ProjectReference Include="..\LSportsMover.Core.MAUI.CLI.Web.Client\LSportsMover.Core.MAUI.CLI.Web.Client.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0" />
+    <PackageReference Include="Serilog" Version="4.2.0" />
+  </ItemGroup>
+
+</Project>

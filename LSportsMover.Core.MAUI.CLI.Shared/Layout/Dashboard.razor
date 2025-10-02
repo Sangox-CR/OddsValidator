@@ -1,0 +1,100 @@
+﻿
+@using Microsoft.Extensions.Logging;
+
+@page "/dashboard"
+@inject IJSRuntime JS
+@inject ILogger<Dashboard> _logger
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="_content/LSportsMover.Core.MAUI.CLI.Shared/js/dashboard.js"></script>
+
+<div class="container py-4">
+    <h1 class="text-center mb-4">LSports Mover Dashboard</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="dashboard-card weather-widget">
+                <div class="weather-icon">
+                    <i class="fas fa-sun"></i>
+                </div>
+                <div class="weather-temp">25°C</div>
+                <div class="weather-description">Sunny</div>
+                <div class="weather-location">New York, NY</div>
+            </div>
+            <div class="dashboard-card">
+                <h3>Quick Stats</h3>               
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-value">1,234</div>
+                            <div class="stat-label">Total Users</div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-icon text-success">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-value">$5,678</div>
+                            <div class="stat-label">Revenue</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <div class="stat-icon text-info">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">New Posts</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="stat-card">
+                            <div class="stat-icon text-warning">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-value">4.7</div>
+                            <div class="stat-label">Avg. Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+             <div class="dashboard-card">
+                <div class="terminal-container">
+                <textarea id="terminalOutput" class="terminal-output" readonly></textarea>
+                <div class="terminal-input-wrapper">
+                    <span class="prompt">></span>
+                    <input type="text" id="terminalInput" class="terminal-input" autofocus>
+                </div>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <h3>Monthly Revenue</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="dashboard-card">
+                <h3>User Demographics</h3>
+                <canvas id="demographicsChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    protected override async Task OnInitializedAsync(){
+        _logger.LogInformation("Hello from Blazor!");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstLoad){
+        if(firstLoad){
+           await JS.InvokeVoidAsync("LoadTerminal");
+           _logger.LogInformation("Hello from Blazor!");
+        }    
+    }
+}

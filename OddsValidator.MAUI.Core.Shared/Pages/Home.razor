@@ -1,0 +1,185 @@
+﻿@page "/"
+@using BettorsDenMover.Core.Entities.Models
+@using OddsValidator.MAUI.Core.Shared.Services
+@inject IFormFactor FormFactor
+@using BettorsDenMover.Core.Utils
+
+<PageTitle>Home</PageTitle>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<title>Odds Validator</title>
+@* <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> *@
+<div class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+	<div class="flex h-screen flex-col">
+		<header class="border-b border-gray-200/50 dark:border-gray-700/50 px-4 sm:px-6 lg:px-8">
+			<div class="flex h-16 items-center justify-between">
+				<div class="flex items-center gap-4">
+					<span class="material-symbols-outlined text-primary text-3xl"> verified </span>
+					<h1 class="text-lg font-bold text-gray-900 dark:text-white">Odds Validator</h1>
+				</div>
+				@* <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
+					<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Home</a>
+					<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">About</a>
+					<a class="text-gray-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors" href="#">Contact</a>
+				</nav>
+				<div class="flex items-center gap-4">
+					<button class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors">
+						<span class="material-symbols-outlined text-gray-600 dark:text-gray-300"> settings </span>
+					</button>
+					<div class="w-10 h-10 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCMcCEi8L1kovcFOtVloL3hVPG1mOQ1myVq1cMqK5XqXML4Jo-VEO1uCiwM81JWtjlEsfhqe7C3DU6yMdxG6QJUIIwB2pH13uHIFixQXi_dVNptRf6i392IXZT6_mctULTHtiU4M3Afj7yF1cw0N9LFFrnNsIE_W4241f1G0rlVEQYy727jh5P0_zGYWpYdSDHYwZEtFJNFQ0xlIwo2WfIykDMuYd7TG0z8GrlhM1NfiTD2YJrQUbUBCoMHlHnpcZX-IGPKogHuFGBh");'></div>
+				</div> *@
+			</div>
+		</header>
+		<main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+			<div class="mx-auto max-w-4xl">
+				<h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-3xl">Odds Validation</h2>
+				<p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Validate the congruence of odds between 2-way and 3-way betting options.</p>
+				<div class="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-2">
+					@* form *@
+					<EditForm Model="@oddsUIModel" OnValidSubmit="OnSubmitValidateAsync">
+					<div class="space-y-6">
+						<div>
+							<h3 class="text-lg font-semibold text-gray-900 dark:text-white">2-Way Odds</h3>
+							<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+								<label class="block">
+									<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Team A Odds</span>
+										<InputNumber @bind-Value="oddsUIModel._2wayAway" class="form-input mt-1 block w-full rounded border-gray-300/50 dark:border-gray-700/50 bg-gray-100/50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-gray-800 dark:text-gray-200" placeholder="e.g., 1.85" type="text" />
+								</label>
+								<label class="block">
+									<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Team B Odds</span>
+									<InputNumber @bind-Value="oddsUIModel._2wayHome"  class="form-input mt-1 block w-full rounded border-gray-300/50 dark:border-gray-700/50 bg-gray-100/50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-gray-800 dark:text-gray-200" placeholder="e.g., 2.18" type="text" />
+								</label>
+							</div>
+						</div>
+						<div>
+							<h3 class="text-lg font-semibold text-gray-900 dark:text-white">3-Way Odds</h3>
+							<div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+								<label class="block">
+									<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Team A Odds</span>
+										<InputNumber @bind-Value="oddsUIModel._3wayAway" class="form-input mt-1 block w-full rounded border-gray-300/50 dark:border-gray-700/50 bg-gray-100/50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-gray-800 dark:text-gray-200" placeholder="e.g., 2.10" type="text" />
+								</label>
+								<label class="block">
+									<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Team B Odds</span>
+										<InputNumber @bind-Value="oddsUIModel._3wayHome" class="form-input mt-1 block w-full rounded border-gray-300/50 dark:border-gray-700/50 bg-gray-100/50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-gray-800 dark:text-gray-200" placeholder="e.g., 2.30" type="text" />
+								</label>
+								<label class="block sm:col-span-2">
+									<span class="text-sm font-medium text-gray-700 dark:text-gray-300">Draw Odds</span>
+										<InputNumber @bind-Value="oddsUIModel._3wayDraw" class="form-input mt-1 block w-full rounded border-gray-300/50 dark:border-gray-700/50 bg-gray-100/50 dark:bg-gray-800/50 focus:border-primary focus:ring-primary text-gray-800 dark:text-gray-200" placeholder="e.g., 3.50" type="text" />
+								</label>
+							</div>
+						</div>
+						<div class="flex justify-end">
+							<button class="inline-flex items-center justify-center rounded bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">Validate Odds</button>
+						</div>
+					</div>
+					</EditForm>
+					<div class="space-y-4">
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Validation Results</h3>
+						<div class="divide-y divide-gray-200/50 dark:divide-gray-700/50 rounded-lg border border-gray-200/50 dark:border-gray-700/50 bg-gray-50/50 dark:bg-gray-900/20">
+							<div class="p-4 grid grid-cols-2 gap-4">
+								<p class="text-sm text-gray-600 dark:text-gray-400">Prob. (2-Way)</p>
+								<p class="text-sm text-right font-medium text-gray-800 dark:text-gray-200">@oddsUIModel._2wayAwayProb% / @oddsUIModel._2wayHomeProb%</p>
+							</div>
+							<div class="p-4 grid grid-cols-2 gap-4">
+								<p class="text-sm text-gray-600 dark:text-gray-400">Prob. (3-Way)</p>
+								<p class="text-sm text-right font-medium text-gray-800 dark:text-gray-200">@oddsUIModel._3wayAwayProb% / @oddsUIModel._3wayHomeProb% /@oddsUIModel._3wayDrawProb%</p>
+							</div>
+							<div class="p-4 grid grid-cols-2 gap-4">
+								<p class="text-sm text-gray-600 dark:text-gray-400">Total Prob. (2-Way)</p>
+								<p class="text-sm text-right font-medium text-gray-800 dark:text-gray-200">@oddsUIModel._2wayTotalProb%</p>
+							</div>
+							<div class="p-4 grid grid-cols-2 gap-4 bg-primary/10 dark:bg-primary/20">
+								<p class="text-sm font-semibold text-primary dark:text-primary/90">Total Prob. (3-Way)</p>
+								<p class="text-sm text-right font-semibold text-primary dark:text-primary/90">@oddsUIModel._3wayTotalProb%</p>
+							</div>
+							<div class="p-4 grid grid-cols-2 gap-4">
+								<p class="text-sm text-gray-600 dark:text-gray-400">Vigorish (2-Way)</p>
+								<p class="text-sm text-right font-medium text-gray-800 dark:text-gray-200">@oddsUIModel._2wayVig%</p>
+							</div>
+							<div class="p-4 grid grid-cols-2 gap-4 bg-primary/10 dark:bg-primary/20">
+								<p class="text-sm font-semibold text-primary dark:text-primary/90">Vigorish (3-Way)</p>
+								<p class="text-sm text-right font-semibold text-primary dark:text-primary/90">@oddsUIModel._3wayVig%</p>
+							</div>
+							<div class="p-4 rounded-b-lg bg-@oddsUIModel._2wayStatus-100 dark:bg-@oddsUIModel._2wayStatus-900/30">
+								<p class="text-sm font-semibold text-@oddsUIModel._2wayStatus-800 dark:text-@oddsUIModel._2wayStatus-300">Status (2-Way)</p>
+								<p class="mt-1 text-sm text-@oddsUIModel._2wayStatus-700 dark:text-@oddsUIModel._2wayStatus-400">@oddsAnalysis2Way.ToString()</p>
+							</div>
+							<div class="p-4 rounded-b-lg bg-@oddsUIModel._3wayStatus-100 dark:bg-@oddsUIModel._3wayStatus-900/30">
+								<p class="text-sm font-semibold text-@oddsUIModel._3wayStatus-800 dark:text-@oddsUIModel._3wayStatus-300">Status (3-Way)</p>
+								<p class="mt-1 text-sm text-@oddsUIModel._3wayStatus-700 dark:text-@oddsUIModel._3wayStatus-400">@oddsAnalysis3Way.ToString()</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+</div>
+
+
+@code {
+
+	private OddsUI oddsUIModel = new OddsUI();
+	private OddsAnalysis oddsAnalysis2Way = new OddsAnalysis();
+	private OddsAnalysis oddsAnalysis3Way = new OddsAnalysis();
+
+	public async Task OnSubmitValidateAsync()
+	{
+		try
+		{
+			if (oddsUIModel._2wayAway != 0 && oddsUIModel._2wayHome != 0)
+			{
+				oddsAnalysis2Way = OddsValidation.ValidateOdds(oddsUIModel._2wayAway, oddsUIModel._2wayHome);
+				oddsUIModel._2wayAwayProb = Math.Round(oddsAnalysis2Way.FavoriteProbability * 100, 2);
+				oddsUIModel._2wayHomeProb = Math.Round(oddsAnalysis2Way.UnderdogProbability * 100, 2);
+				oddsUIModel._2wayVig = Math.Round(oddsAnalysis2Way.Vig, 2);
+				oddsUIModel._2wayTotalProb = Math.Round(oddsAnalysis2Way.TotalProbability, 2);
+				oddsUIModel._2wayStatus = oddsAnalysis2Way.IsCongruent ? "green" : "orange";
+			}
+
+			if (oddsUIModel._3wayAway != 0 && oddsUIModel._3wayHome != 0 && oddsUIModel._3wayDraw != 0)
+			{
+				oddsAnalysis3Way = OddsValidation.ValidateOdds(oddsUIModel._3wayAway, oddsUIModel._3wayHome, oddsUIModel._3wayDraw);
+				oddsUIModel._3wayAwayProb = Math.Round(oddsAnalysis3Way.FavoriteProbability * 100, 2);
+				oddsUIModel._3wayHomeProb = Math.Round(oddsAnalysis3Way.UnderdogProbability * 100, 2);
+				oddsUIModel._3wayDrawProb = Math.Round(oddsAnalysis3Way.DrawProbability * 100, 2);
+				oddsUIModel._3wayVig = Math.Round(oddsAnalysis3Way.Vig, 2);
+				oddsUIModel._3wayTotalProb = Math.Round(oddsAnalysis3Way.TotalProbability, 2);
+				oddsUIModel._3wayStatus = oddsAnalysis3Way.IsCongruent ? "green" : "orange";
+			}
+		}
+		catch (Exception)
+		{
+			
+			throw;
+		}
+		
+
+	}
+
+	public class OddsUI
+	{
+		public int _2wayAway { get; set; }
+		public int _2wayHome { get; set; }
+		public int _3wayAway { get; set; }
+		public int _3wayHome { get; set; }
+		public int _3wayDraw { get; set; }
+		public double _2wayAwayProb { get; set; }
+		public double _2wayHomeProb { get; set; }
+		public double _3wayAwayProb { get; set; }
+		public double _3wayHomeProb { get; set; }
+		public double _3wayDrawProb { get; set; }
+		public double _2wayTotalProb { get; set; }
+		public double _3wayTotalProb { get; set; }
+		public double _2wayVig { get; set; }
+		public double _3wayVig { get; set; }
+		public string _2wayStatus { get; set; }
+		public string _3wayStatus { get; set; }
+	}
+
+
+}

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/OddsValidator/" />
+    <link rel="stylesheet" href="_content/OddsValidator.MAUI.Core.Shared/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="_content/OddsValidator.MAUI.Core.Shared/app.css" />
+    <link rel="stylesheet" href="OddsValidator.MAUI.Core.Web.styles.css" />
+    <link rel="icon" type="image/png" href="_content/OddsValidator.MAUI.Core.Shared/favicon.png" />
+    <HeadOutlet @rendermode="InteractiveAuto" />
+</head>
+
+<body>
+    <Routes @rendermode="InteractiveAuto" />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+	<script>
+		tailwind.config = {
+		  darkMode: "class",
+		  theme: {
+			extend: {
+			  colors: {
+				primary: "#1173d4",
+				"background-light": "#f6f7f8",
+				"background-dark": "#101922",
+			  },
+			  fontFamily: {
+				display: ["Manrope"],
+			  },
+			  borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+			},
+		  },
+		};
+	</script>
+</body>
+
+</html>
